@@ -39,8 +39,8 @@ async function convertFirestoreEntry(docData: any, docId: string, userId: string
     title,
     content,
     date: docData.date.toDate ? docData.date.toDate() : docData.date,
-    createdAt: docData.createdAt.toDate ? docData.createdAt.toDate() : docData.createdAt,
-    updatedAt: docData.updatedAt.toDate ? docData.updatedAt.toDate() : docData.updatedAt,
+    createdAt: docData.createdAt.toDate ? docData.createdAt.toDate() : docData.date,
+    updatedAt: docData.updatedAt.toDate ? docData.updatedAt.toDate() : docData.date,
     userId: userId
   }
 }
