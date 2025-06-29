@@ -20,6 +20,7 @@ import {
   Notebook,
   Music,
   MapPinned,
+  Settings
 } from "lucide-react";
 import { ChatBubbleIcon } from "@radix-ui/react-icons";
 import Joyride, {
@@ -130,6 +131,7 @@ const navItems: NavItem[] = [
     icon: <MapPinned size={20} />,
   },
   { label: "Community", href: "/dashboard/blogs", icon: <Users size={20} /> },
+  { label: "Settings", href: "/dashboard/settings", icon: <Settings size={20} /> },
 ];
 
 const SidePanel: React.FC = () => {
