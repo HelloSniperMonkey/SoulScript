@@ -4,7 +4,7 @@ import { useState, useEffect } from "react"
 import Link from "next/link"
 import { Button } from "@/components/ui/button"
 import { Menu, X } from "lucide-react"
-import { auth, signInWithGoogle, signOutUser } from "@/lib/firebase"
+import { auth, handleRedirectResult, signInWithGoogle, signOutUser } from "@/lib/firebase"
 import { onAuthStateChanged, User } from "firebase/auth"
 import { useRouter } from "next/navigation"
 import { Settings, LogOut } from "lucide-react" // Assuming you use lucide-react for icons
@@ -37,6 +37,7 @@ export default function Navbar() {
   const handleGoogleSignIn = async () => {
     try {
       await signInWithGoogle()
+      await handleRedirectResult();
     } catch (error) {
       console.error('Sign in error:', error)
     }

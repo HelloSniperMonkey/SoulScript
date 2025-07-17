@@ -1,0 +1,8 @@
+{
+  "rewrites": [
+    {
+      "source": "/__/auth/:path*",
+      "destination": "https://soulscript-a6e1f.firebaseapp.com/__/auth/:path*"
+    }
+  ]
+}

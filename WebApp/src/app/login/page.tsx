@@ -1,6 +1,6 @@
 "use client";
 import React, { useState, useEffect } from "react";
-import { signInWithGoogle, waitForAuthState } from "@/lib/firebase";
+import { handleRedirectResult, signInWithGoogle, waitForAuthState } from "@/lib/firebase";
 
 interface SignInFormData {
   email: string;
@@ -40,7 +40,7 @@ const SoulScriptSignIn: React.FC = () => {
     if (user) {
       // User is signed in, redirect or perform any necessary actions
       console.log("User is signed in:", user);
-      window.location.href = "/"; // Redirect to the main app page
+      window.location.href = "/dashboard"; // Redirect to the main app page
       // You can redirect to the main app page or perform other actions here
     } else {
       // User is not signed in, stay on the sign-in page
@@ -54,6 +54,7 @@ const SoulScriptSignIn: React.FC = () => {
     // alert("Google Sign-In would be implemented here!");
     if (!loading) {
       await signInWithGoogle();
+      await handleRedirectResult();
       checkUserAndRedirect();
     }
   };

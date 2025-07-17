@@ -1,7 +1,8 @@
 import { initializeApp } from 'firebase/app';
 import { 
   getAuth, 
-  signInWithPopup, 
+  signInWithRedirect, 
+  getRedirectResult,
   GoogleAuthProvider, 
   User,
   onAuthStateChanged,
@@ -43,17 +44,30 @@ googleProvider.setCustomParameters({
 });
 
 // Sign in with Google
-export const signInWithGoogle = async (): Promise<User | null> => {
+export const signInWithGoogle = async (): Promise<void> => {
   try {
-    const result = await signInWithPopup(auth, googleProvider);
-    const user = result.user;
-    
-    // Create user document if it doesn't exist
-    await createUserDocument(user);
-    
-    return user;
+    await signInWithRedirect(auth, googleProvider);
   } catch (error) {
     console.error('Error signing in with Google:', error);
+    throw error;
+  }
+};
+
+// Handle redirect result after sign-in
+export const handleRedirectResult = async (): Promise<User | null> => {
+  try {
+    const result = await getRedirectResult(auth);
+    if (result) {
+      const user = result.user;
+      
+      // Create user document if it doesn't exist
+      await createUserDocument(user);
+      
+      return user;
+    }
+    return null;
+  } catch (error) {
+    console.error('Error handling redirect result:', error);
     throw error;
   }
 };
