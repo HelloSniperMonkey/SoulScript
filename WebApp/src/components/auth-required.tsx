@@ -30,7 +30,7 @@ export default function AuthRequired({ children }: { children: ReactNode }) {
   }
   
   if (!user) {
-    redirect("/sign-in")
+    redirect("/login")
   }
   
   return <>{children}</>

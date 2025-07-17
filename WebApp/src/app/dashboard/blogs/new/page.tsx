@@ -66,7 +66,7 @@ export default function NewPostPage() {
     
     if (!user) {
       alert("You must be signed in to create a post.")
-      router.push("/sign-in?redirect_url=/dashboard/blogs/new")
+      router.push("/login?redirect_url=/dashboard/blogs/new")
       return
     }
     
