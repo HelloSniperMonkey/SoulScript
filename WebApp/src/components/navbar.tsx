@@ -52,13 +52,13 @@ export default function Navbar() {
   }
 
   const login = () => (
-    <Button 
+    <a 
       onClick={handleGoogleSignIn}
-      variant="ghost" 
+      target="_blank"
       className="text-white hover:bg-purple-900/30"
     >
       Sign In with Google
-    </Button>
+    </a>
   )
   
   const logout = () => (
