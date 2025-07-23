@@ -1,12 +1,11 @@
 import { initializeApp } from 'firebase/app';
 import { 
   getAuth, 
-  signInWithRedirect, 
-  getRedirectResult,
   GoogleAuthProvider, 
   User,
   onAuthStateChanged,
-  signOut
+  signOut,
+  signInWithPopup
 } from 'firebase/auth';
 import { 
   getFirestore, 
@@ -44,9 +43,15 @@ googleProvider.setCustomParameters({
 });
 
 // Sign in with Google
-export const signInWithGoogle = async (): Promise<void> => {
+export const signInWithGoogle = async (): Promise<User | null> => {
   try {
-    await signInWithRedirect(auth, googleProvider);
+    const result = await signInWithPopup(auth, googleProvider);
+    const user = result.user;
+    
+    // Create user document if it doesn't exist
+    await createUserDocument(user);
+    
+    return user;
   } catch (error) {
     console.error('Error signing in with Google:', error);
     throw error;
@@ -54,23 +59,23 @@ export const signInWithGoogle = async (): Promise<void> => {
 };
 
 // Handle redirect result after sign-in
-export const handleRedirectResult = async (): Promise<User | null> => {
-  try {
-    const result = await getRedirectResult(auth);
-    if (result) {
-      const user = result.user;
+// export const handleRedirectResult = async (): Promise<User | null> => {
+//   try {
+//     const result = await getRedirectResult(auth);
+//     if (result) {
+//       const user = result.user;
       
-      // Create user document if it doesn't exist
-      await createUserDocument(user);
+//       // Create user document if it doesn't exist
+//       await createUserDocument(user);
       
-      return user;
-    }
-    return null;
-  } catch (error) {
-    console.error('Error handling redirect result:', error);
-    throw error;
-  }
-};
+//       return user;
+//     }
+//     return null;
+//   } catch (error) {
+//     console.error('Error handling redirect result:', error);
+//     throw error;
+//   }
+// };
 
 // Sign out
 export const signOutUser = async (): Promise<void> => {
