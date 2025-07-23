@@ -61,7 +61,7 @@ const SecureSignInButton: React.FC<SecureSignInButtonProps> = ({
       const user = await signInWithGoogle();
       if (user) {
         console.log('Signed in successfully:', user.displayName);
-        // Handle successful login (e.g., redirect to dashboard)
+        window.location.href = '/dashboard'; // Redirect to the main app page
       }
     } catch (error) {
       console.error('Sign in failed:', error);
