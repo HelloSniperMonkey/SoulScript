@@ -1,6 +1,7 @@
 "use client";
 import React, { useState, useEffect } from "react";
-import { handleRedirectResult, signInWithGoogle, waitForAuthState } from "@/lib/firebase";
+import { signInWithGoogle, waitForAuthState } from "@/lib/firebase";
+import SecureSignInButton from "@/components/secure-signin-button";
 
 interface SignInFormData {
   email: string;
@@ -54,7 +55,6 @@ const SoulScriptSignIn: React.FC = () => {
     // alert("Google Sign-In would be implemented here!");
     if (!loading) {
       await signInWithGoogle();
-      await handleRedirectResult();
       checkUserAndRedirect();
     }
   };
@@ -215,13 +215,13 @@ const SoulScriptSignIn: React.FC = () => {
             Your journey to inner peace begins here
           </p>
         </div>
-        <button
-          onClick={handleGoogleSignIn}
-          className="google-btn w-full py-3 border-2 border-gray-200 rounded-xl bg-white text-gray-700 text-base cursor-pointer transition-all duration-300 flex items-center justify-center gap-3 mb-5 hover:border-green-400 hover:shadow-md"
+        <SecureSignInButton 
+          variant="outline"
+          className="w-full py-3 border-2 border-gray-200 rounded-xl bg-white text-gray-700 text-base cursor-pointer transition-all duration-300 flex items-center justify-center gap-3 mb-5 hover:border-green-400 hover:shadow-md"
         >
           <GoogleIcon />
-          {loading ? "Loading..." : isSigningIn ? "..." : "Sign In with Google"}
-        </button>
+          {loading ? "Loading..." : "Sign In with Google"}
+        </SecureSignInButton>
       </div>
     </div>
   );

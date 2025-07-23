@@ -4,7 +4,7 @@ import { useState, useEffect } from "react"
 import Link from "next/link"
 import { Button } from "@/components/ui/button"
 import { Menu, X } from "lucide-react"
-import { auth, handleRedirectResult, signInWithGoogle, signOutUser } from "@/lib/firebase"
+import { auth, signOutUser } from "@/lib/firebase"
 import { onAuthStateChanged, User } from "firebase/auth"
 import { useRouter } from "next/navigation"
 import { Settings, LogOut } from "lucide-react" // Assuming you use lucide-react for icons
@@ -16,6 +16,7 @@ import {DropdownMenu,
         DropdownMenuSeparator,
         DropdownMenuTrigger,
   } from "@/components/ui/dropdown-menu"
+import SecureSignInButton from "@/components/secure-signin-button"
 
 export default function Navbar() {
   const [isMenuOpen, setIsMenuOpen] = useState(false)
@@ -37,7 +38,6 @@ export default function Navbar() {
   const handleGoogleSignIn = async () => {
     try {
       await signInWithGoogle()
-      await handleRedirectResult();
     } catch (error) {
       console.error('Sign in error:', error)
     }
@@ -52,13 +52,13 @@ export default function Navbar() {
   }
 
   const login = () => (
-    <a 
+    <Button 
       onClick={handleGoogleSignIn}
-      target="_blank"
+      variant="ghost" 
       className="text-white hover:bg-purple-900/30"
     >
       Sign In with Google
-    </a>
+    </Button>
   )
   
   const logout = () => (
@@ -172,7 +172,10 @@ export default function Navbar() {
                 </>
               ) : (
                 <>
-                  {login()}
+                  <SecureSignInButton 
+                    variant="ghost" 
+                    className="text-white hover:bg-purple-900/30 justify-center"
+                  />
                   <Button
                     asChild
                     className="justify-center bg-gradient-to-r from-purple-600 to-pink-600 hover:from-purple-700 hover:to-pink-700 text-white border-0"
